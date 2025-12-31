@@ -1,0 +1,175 @@
+/* animations.css - High Performance UI Transitions & Micro-interactions */
+
+/* 1. KEYFRAMES */
+
+/* Entrance Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Attention & Selection */
+@keyframes toothPulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 156, 231, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(0, 156, 231, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 156, 231, 0); }
+}
+
+@keyframes progressFill {
+  from { width: 0; }
+}
+
+/* Feedback Loops */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* 2. ENTRANCE UTILITIES */
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-left {
+  animation: fadeInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered Delay System for Lists */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+
+/* 3. COMPONENT MICRO-INTERACTIONS */
+
+/* Cards Hover "Lift" */
+.info-card {
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1), 
+              box-shadow 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Sidebar Icon Bounce */
+.nav-icon-link svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-icon-link:hover svg {
+  transform: scale(1.15);
+}
+
+.nav-icon-link.active svg {
+  transform: scale(1.1);
+}
+
+/* Dental Chart Selection */
+.tooth-item {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.tooth-item:hover {
+  transform: scale(1.08);
+  filter: brightness(1.05);
+  z-index: 10;
+}
+
+.tooth-item.selected {
+  animation: toothPulse 2s infinite;
+  background: rgba(0, 156, 231, 0.05);
+  border-radius: 4px;
+}
+
+/* Buttons Glow & Click */
+.btn-ui-primary {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ui-primary:active {
+  transform: scale(0.96);
+}
+
+/* Progress Bar Filling */
+.progress-bar {
+  animation: progressFill 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* 4. LAYOUT TRANSITIONS */
+
+/* Modal & Offcanvas */
+.modal.fade .modal-dialog {
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+/* Dropdowns Smooth Slide */
+.dropdown-menu {
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 5. RESPONSIVE & ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile Touch Feedback */
+@media (max-width: 768px) {
+  .tooth-item:active {
+    transform: scale(0.9);
+    transition: transform 0.1s ease;
+  }
+}

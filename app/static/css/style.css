@@ -1,0 +1,242 @@
+/* style.css */
+:root {
+  /* Colors */
+  --ui-primary: #009ce7;
+  --ui-primary-hover: #0086c7;
+  --ui-sidebar-bg: #16212e;
+  --ui-bg-main: #f4f7f9;
+  --ui-bg-dark: #1a2331;
+  --ui-text-main: #334155;
+  --ui-text-muted: #94a3b8;
+  --ui-border-color: #e2e8f0;
+  --ui-border-dark: #2d3748;
+  
+  /* Dental Status Colors */
+  --dental-decay: #e53e3e;
+  --dental-restoration: #3182ce;
+  --dental-pathology: #ecc94b;
+  --dental-endo: #9f7aea;
+  
+  /* Shadows & Radius */
+  --ui-shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --ui-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --ui-radius: 8px;
+  
+  --sidebar-width: 64px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--ui-bg-main);
+  color: var(--ui-text-main);
+  overflow-x: hidden;
+}
+
+body.dark-mode {
+  background-color: var(--ui-bg-dark);
+  color: #fff;
+}
+
+/* Layout Structure */
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar-nav {
+  width: var(--sidebar-width);
+  background-color: var(--ui-sidebar-bg);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  z-index: 1050;
+  transition: width 0.3s ease;
+}
+
+.main-container {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation Elements */
+.nav-icon-link {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-icon-link.active {
+  background-color: var(--ui-primary);
+  color: #fff;
+}
+
+.nav-icon-link:hover:not(.active) {
+  background-color: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+/* Top Header */
+.top-header {
+  height: 60px;
+  background: #fff;
+  border-bottom: 1px solid var(--ui-border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  justify-content: space-between;
+}
+
+.dark-mode .top-header {
+  background: var(--ui-bg-dark);
+  border-bottom-color: var(--ui-border-dark);
+}
+
+/* Dental Chart Components */
+.chart-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.tooth-grid {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 2rem;
+}
+
+.tooth-item {
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.tooth-item:hover {
+  transform: scale(1.1);
+}
+
+.tooth-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 4px;
+}
+
+.tooth-number {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ui-text-muted);
+}
+
+/* Data Cards */
+.info-card {
+  background: #fff;
+  border-radius: var(--ui-radius);
+  border: 1px solid var(--ui-border-color);
+  box-shadow: var(--ui-shadow-sm);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.dark-mode .info-card {
+  background: rgba(255,255,255,0.03);
+  border-color: var(--ui-border-dark);
+}
+
+/* Custom Buttons */
+.btn-ui-primary {
+  background-color: var(--ui-primary);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn-ui-primary:hover {
+  background-color: var(--ui-primary-hover);
+  color: #fff;
+}
+
+/* Periodontal Table */
+.perio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.perio-cell {
+  background: #f8fafc;
+  border: 1px solid var(--ui-border-color);
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+}
+
+.dark-mode .perio-cell {
+  background: rgba(0,0,0,0.2);
+  border-color: var(--ui-border-dark);
+}
+
+.perio-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.perio-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--ui-text-muted);
+}
+
+/* Floating labels / Badges */
+.status-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar-nav {
+    width: 50px;
+  }
+  .main-container {
+    margin-left: 50px;
+  }
+  .chart-container {
+    padding: 1rem;
+  }
+  .tooth-item {
+    width: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .top-header {
+    padding: 0 0.75rem;
+  }
+  .perio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

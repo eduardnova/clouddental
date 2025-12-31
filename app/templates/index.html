@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudDental - Cloud-Based Dental Charting Platform</title>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #06b6d4;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            padding: 0.75rem 1.8rem;
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 2rem 120px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-50px, 50px) rotate(180deg); }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .gradient-text {
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .btn-primary {
+            padding: 1rem 2.5rem;
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        .mockup-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
+            animation: floatImage 6s ease-in-out infinite;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .mockup {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Trust Signals */
+        .trust-section {
+            padding: 4rem 2rem;
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .trust-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .trust-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .trust-badge {
+            padding: 1rem 2rem;
+            background: var(--light-gray);
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .trust-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 2rem;
+            background: white;
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .feature-card {
+            padding: 3rem;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .feature-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Clinical Workflow */
+        .workflow {
+            padding: 120px 2rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        }
+
+        .workflow-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .workflow-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .workflow-step::after {
+            content: '→';
+            position: absolute;
+            right: -1.5rem;
+            top: 30px;
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+
+        .workflow-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .workflow-step h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .workflow-step p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Integrations */
+        .integrations {
+            padding: 120px 2rem;
+            background: white;
+        }
+
+        .integrations-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .integration-card {
+            padding: 2rem;
+            background: var(--light-gray);
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .integration-card:hover {
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .integration-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .integration-card h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 120px 2rem;
+            background: var(--dark);
+            color: white;
+        }
+
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .testimonial-card {
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h5 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 2rem;
+            background: var(--gradient-2);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .btn-white {
+            padding: 1.2rem 3rem;
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Interactive Dental Chart Preview */
+        .dental-chart-preview {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dental-chart-preview::before {
+            content: '🦷';
+            font-size: 15rem;
+            opacity: 0.1;
+            position: absolute;
+        }
+
+        .chart-text {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            z-index: 1;
+        }
+/* Pricing Section CSS */
+.pricing {
+    padding: 120px 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+}
+
+.pricing-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    font-weight: 600;
+    color: var(--gray);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.pricing-card {
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(37, 99, 235, 0.2);
+}
+
+.pricing-card h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.pricing-card .price {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: var(--dark);
+}
+
+.pricing-card .price .annual {
+    display: none;
+}
+
+.pricing-card ul {
+    list-style: none;
+    text-align: left;
+    padding: 0 2rem;
+}
+
+.pricing-card ul li {
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--gray);
+}
+
+.pricing-card ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+}
+
+.compare-plans {
+    margin-top: 6rem;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.comparison-table th {
+    background: var(--gradient-2);
+    color: white;
+    font-weight: 700;
+}
+
+.comparison-table tr:nth-child(even) {
+    background: var(--light-gray);
+}
+
+.comparison-table td:first-child {
+    font-weight: 600;
+    background: rgba(37, 99, 235, 0.1);
+}
+
+ /* FAQ Section CSS */
+.faq {
+    padding: 120px 2rem;
+    background: white;
+}
+
+.faq-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.faq-accordion .faq-item {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    padding: 1.5rem;
+    background: var(--light-gray);
+    border: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+    background: rgba(37, 99, 235, 0.1);
+}
+
+.faq-question::after {
+    content: '+';
+    position: absolute;
+    right: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.faq-item.active .faq-question::after {
+    content: '-';
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 1.5rem;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px; /* Ajusta según contenido */
+    padding: 1.5rem;
+}
+
+.faq-answer p {
+    color: var(--gray);
+    line-height: 1.8;
+}
+
+/* Improved CSS for Compare Plans Table */
+.compare-plans {
+    margin-top: 6rem;
+    text-align: center;
+}
+
+.comparison-table {
+    width: 100%;
+    max-width: 1400px;
+    margin: 2rem auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    background: white;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.comparison-table thead th {
+    background: var(--gradient-2);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 1.5rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.comparison-table tbody tr {
+    transition: background 0.3s ease;
+}
+
+.comparison-table tbody tr:hover {
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.comparison-table td {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    vertical-align: top;
+    color: var(--dark);
+}
+
+.comparison-table td:first-child {
+    font-weight: 700;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary);
+    text-align: left;
+    width: 15%;
+}
+
+.comparison-table td:nth-child(2) {
+    width: 35%;
+}
+
+.comparison-table td:nth-child(3) {
+    width: 50%;
+}
+
+.comparison-table td br {
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .workflow-steps {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .integrations-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .comparison-table td {
+        padding: 1.2rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: flex;
+    }
+
+    .hero {
+        padding: 120px 1rem 80px;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+        letter-spacing: -1px;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .features {
+        padding: 80px 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 2.5rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow {
+        padding: 80px 1rem;
+    }
+
+    .workflow-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow-step::after {
+        content: '↓';
+        right: 50%;
+        transform: translateX(50%);
+        top: auto;
+        bottom: -2rem;
+    }
+
+    .integrations {
+        padding: 80px 1rem;
+    }
+
+    .integrations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonials {
+        padding: 80px 1rem;
+    }
+
+    .cta-section {
+        padding: 80px 1rem;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .pricing {
+        padding: 80px 1rem;
+    }
+
+    .pricing-toggle {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .pricing-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-table {
+        border: 0;
+        box-shadow: none;
+    }
+
+    .comparison-table thead {
+        display: none;
+    }
+
+    .comparison-table tbody tr {
+        margin-bottom: 2rem;
+        display: block;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        background: white;
+    }
+
+    .comparison-table td {
+        display: block;
+        text-align: left;
+        padding: 1rem 1.5rem;
+        position: relative;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .comparison-table td:last-child {
+        border-bottom: none;
+    }
+
+    .comparison-table td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .comparison-table td:first-child::before {
+        font-size: 1.2rem;
+    }
+
+    .faq {
+        padding: 80px 1rem;
+    }
+
+    .faq-question {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    .trust-section {
+        padding: 3rem 1rem;
+    }
+
+    .trust-logos {
+        gap: 2rem;
+    }
+
+    .trust-badge {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .dental-chart-preview {
+        height: 300px;
+    }
+
+    .chart-text {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .hero {
+        padding: 100px 1rem 60px;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        padding: 0.8rem 2rem;
+        font-size: 0.95rem;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .section-header p {
+        font-size: 1rem;
+    }
+
+    .feature-card {
+        padding: 2rem;
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .workflow-step h4 {
+        font-size: 1rem;
+    }
+
+    .workflow-step p {
+        font-size: 0.8rem;
+    }
+
+    .integration-card {
+        padding: 1.5rem;
+    }
+
+    .integration-icon {
+        font-size: 2.5rem;
+    }
+
+    .testimonial-card {
+        padding: 2rem;
+    }
+
+    .testimonial-text {
+        font-size: 1rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+    }
+
+    .btn-white {
+        padding: 1rem 2.5rem;
+        font-size: 1rem;
+    }
+
+    .footer-brand h3 {
+        font-size: 1.8rem;
+    }
+
+    .footer-column h4 {
+        font-size: 1rem;
+    }
+
+    .pricing-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .pricing-card h3 {
+        font-size: 1.8rem;
+    }
+
+    .pricing-card .price {
+        font-size: 2.5rem;
+    }
+
+    .faq-question {
+        font-size: 0.95rem;
+    }
+
+    .faq-answer p {
+        font-size: 0.9rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">CloudDental</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <button class="cta-btn">Request Demo</button>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>
+                    Cloud-Based<br>
+                    <span class="gradient-text">Dental Charting</span><br>
+                    Platform
+                </h1>
+                <p>Transform your dental practice with AI-powered charting, real-time collaboration, and seamless integration. The most intuitive dental software trusted by over 5,000 clinics worldwide.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary">Start Free Trial</button>
+                    <button class="btn-secondary">Watch Demo</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="mockup-container">
+                    <div class="mockup">
+                        <div class="dental-chart-preview">
+                            <div class="chart-text">Interactive Dental Chart</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Signals -->
+    <section class="trust-section">
+        <div class="trust-content">
+            <p>Trusted by leading dental professionals</p>
+            <div class="trust-logos">
+                <div class="trust-badge">🔒 HIPAA Compliant</div>
+                <div class="trust-badge">☁️ Cloud Secure</div>
+                <div class="trust-badge">⚡ ISO 27001</div>
+                <div class="trust-badge">✓ ADA Certified</div>
+                <div class="trust-badge">🌍 5000+ Clinics</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-header">
+                <span class="section-label">FEATURES</span>
+                <h2>Everything You Need for<br>Modern Dental Charting</h2>
+                <p>Powerful features designed specifically for dental professionals to streamline workflows and improve patient care.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🦷</div>
+                    <h3>Interactive Dental Chart</h3>
+                    <p>Intuitive touch-based interface for recording conditions, restorations, and treatments with real-time visualization.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">📊</div>
+                    <h3>Periodontal Charting</h3>
+                    <p>Complete perio charting with probing depths, bleeding points, mobility tracking, and historical comparison.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Treatment Planning</h3>
+                    <p>Create comprehensive treatment plans with cost estimates, insurance integration, and patient presentations.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Diagnosis Assistant</h3>
+                    <p>AI-powered suggestions for endodontic diagnosis based on clinical tests and radiographic findings.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">📸</div>
+                    <h3>Imaging Integration</h3>
+                    <p>Seamlessly integrate X-rays, intraoral photos, and CBCT scans directly into patient charts.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">📈</div>
+                    <h3>Analytics & Reports</h3>
+                    <p>Comprehensive practice analytics, treatment outcomes tracking, and customizable reports.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Historical Timeline</h3>
+                    <p>Track patient history with rollback feature to view dental status changes over time.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Multi-Location Support</h3>
+                    <p>Perfect for DSOs and multi-location practices with centralized data and local autonomy.</p>
+                </div>
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Security & Compliance</h3>
+                    <p>Bank-level encryption, HIPAA compliance, automatic backups, and audit trails.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clinical Workflow -->
+    <section class="workflow">
+        <div class="workflow-container">
+            <div class="section-header">
+                <span class="section-label">WORKFLOW</span>
+                <h2>Streamlined Clinical Workflow</h2>
+                <p>From examination to treatment approval in minutes, not hours.</p>
+            </div>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <h4>Chart</h4>
+                    <p>Record clinical findings with intuitive interface</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <h4>Diagnose</h4>
+                    <p>AI-assisted diagnosis suggestions</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <h4>Plan</h4>
+                    <p>Create comprehensive treatment plans</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <h4>Present</h4>
+                    <p>Visual patient presentations</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <h4>Approve</h4>
+                    <p>Digital treatment acceptance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="integrations">
+        <div class="integrations-container">
+            <div class="section-header">
+                <span class="section-label">INTEGRATIONS</span>
+                <h2>Seamless Integration with<br>Your Existing Tools</h2>
+                <p>Connect with the software you already use.</p>
+            </div>
+            <div class="integrations-grid">
+                <div class="integration-card">
+                    <div class="integration-icon">📷</div>
+                    <h4>Digital Imaging</h4>
+                    <p>X-rays & Photos</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">💳</div>
+                    <h4>Billing Systems</h4>
+                    <p>Payment Processing</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">📅</div>
+                    <h4>Practice Management</h4>
+                    <p>Scheduling & EMR</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">📧</div>
+                    <h4>Patient Communication</h4>
+                    <p>SMS & Email</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">🔌</div>
+                    <h4>Open API</h4>
+                    <p>Custom Integrations</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">📊</div>
+                    <h4>Analytics Tools</h4>
+                    <p>Business Intelligence</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">🏥</div>
+                    <h4>Insurance Verification</h4>
+                    <p>Real-time Benefits</p>
+                </div>
+                <div class="integration-card">
+                    <div class="integration-icon">🔗</div>
+                    <h4>Lab Integrations</h4>
+                    <p>Direct Orders</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <div class="section-header">
+                <span class="section-label">PRECIOS</span>
+                <h2>Precios Transparentes y Simples</h2>
+                <p>Sin contratos. Sin tarifas sorpresa.</p>
+                <div class="pricing-toggle">
+                    <span>Pago Mensual</span>
+                    <label class="switch">
+                        <input type="checkbox" id="billing-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span>20% Descuento Anual</span>
+                </div>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card basic">
+                    <h3>Basic</h3>
+                    <p class="price">
+                        <span class="monthly">$48</span>
+                        <span class="annual hidden">$38.40</span> 
+                        <span>/Mes</span>
+                    </p>
+                    <button class="btn-primary">Prueba Gratis 14 Días</button>
+                    <ul>
+                        <li>Agenda (Calendario Dinámico)</li>
+                        <li>Lista de Clientes (Pacientes)</li>
+                        <li>Módulo de Pagos</li>
+                        <li>Cotizaciones y Abonos</li>
+                        <li>Procedimientos de la Clínica</li>
+                    </ul>
+                </div>
+                <div class="pricing-card pro">
+                    <h3>Pro</h3>
+                    <p class="price">
+                        <span class="monthly">$250</span>
+                        <span class="annual hidden">$200</span> 
+                        <span>/Mes</span>
+                    </p>
+                    <button class="btn-primary">Prueba Gratis 14 Días</button>
+                    <ul>
+                        <li>Todos los de Basic +</li>
+                        <li>Inventario de Insumos</li>
+                        <li>Nómina de Empleados</li>
+                        <li>Dashboard de Gastos, Ingresos y Ganancias</li>
+                        <li>Listas de Procedimientos y Clientes</li>
+                    </ul>
+                </div>
+                <div class="pricing-card enterprise">
+                    <h3>Enterprise</h3>
+                    <p class="price">Personalizado</p>
+                    <button class="btn-primary">Contactar Ventas</button>
+                    <ul>
+                        <li>Todos los de Pro +</li>
+                        <li>Admin de Sucursales</li>
+                        <li>Gestión de Múltiples Branches</li>
+                        <li>Dashboard Global</li>
+                        <li>Integración con Pagos Online</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="compare-plans">
+                <h2>Comparar Planes</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Plan</th>
+                            <th>Módulos Disponibles</th>
+                            <th>Funciones y Características</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Plan">Basic</td>
+                            <td data-label="Módulos Disponibles">
+                                - Agenda (Calendario Dinámico): Registro y visualización de citas.<br>
+                                - Lista de Clientes (Pacientes): Gestión de pacientes.<br>
+                                - Módulo de Pagos: Registro de pagos por pacientes y procedimientos.<br>
+                                - Cotizaciones y Abonos: Creación de cotizaciones y registro de pagos parciales.<br>
+                                - Procedimientos de la Clínica: Catálogo y registro de procedimientos odontológicos con costos.
+                            </td>
+                            <td data-label="Funciones y Características">
+                                - Calendario visible para recepcionistas (todas las citas) y odontólogos (solo sus citas asignadas).<br>
+                                - Registro de pacientes con datos básicos (nombre, DOB, etc.) via tabla patients.<br>
+                                - Pagos asociados a pacientes/procedimientos (efectivo, tarjeta, transferencia) con adjuntos de comprobantes, catálogos de tipos de pagos y bancos.<br>
+                                - Cotizaciones con detalles y totales (tabla quotations).<br>
+                                - Catálogo global de procedimientos (procedure_catalog) y personalizados por clínica (clinic_procedures).<br>
+                                - Funciones: CRUD básico, historial de movimientos con triggers.<br>
+                                - Características: Acceso limitado a lectura/escritura por permisos; dashboard simple de citas.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="Plan">Pro</td>
+                            <td data-label="Módulos Disponibles">
+                                Todos los de Basic +<br>
+                                - Inventario de Insumos: Gestión de suministros y uso.<br>
+                                - Nómina de Empleados: Sistema de payroll.<br>
+                                - Dashboard de Gastos, Ingresos y Ganancias: Visualización de métricas financieras.<br>
+                                - Listas de Procedimientos y Clientes: Historial completo de pacientes.
+                            </td>
+                            <td data-label="Funciones y Características">
+                                - Inventario: Registro de insumos (supplies), usos en procedimientos (supply_usages), alertas de bajo stock via triggers en notificaciones.<br>
+                                - Nómina: Registro de pagos a empleados (payrolls), períodos y estados.<br>
+                                - Dashboard: Ingresos de pagos (payments), gastos (expenses), ganancias calculadas; vistas como monthly_income para reportes.<br>
+                                - Historial: Módulo para odontólogos buscar pacientes y ver procedimientos (patient_procedures), medicamentos (prescriptions), historial completo.<br>
+                                - Funciones: Reportes avanzados (reports), análisis de datos; sincronización de calendario externo (sync_id en appointments).<br>
+                                - Características: Notificaciones automáticas (e.g., bajo stock); puntos de fidelidad (loyalty_points) para pacientes; 2FA en login (two_factor_secret en users).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="Plan">Enterprise</td>
+                            <td data-label="Módulos Disponibles">
+                                Todos los de Pro +<br>
+                                - Admin de Sucursales: Gestión de múltiples branches.
+                            </td>
+                            <td data-label="Funciones y Características">
+                                - Sucursales: Registro y asignación de citas, inventario, gastos por sucursal (branches).<br>
+                                - Funciones: Dashboard global con métricas por sucursal; reportes agregados.<br>
+                                - Características: Escalabilidad para multi-sucursal; vistas como view_overall_dashboard para ganancias totales; integración con pagos online para suscripciones.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="faq-container">
+            <div class="section-header">
+                <span class="section-label">FAQ</span>
+                <h2>Preguntas Frecuentes</h2>
+            </div>
+            <div class="faq-accordion">
+                <div class="faq-item">
+                    <button class="faq-question">¿Cómo crear una cuenta?</button>
+                    <div class="faq-answer">
+                        <p>Para crear una cuenta, encuentra el botón "Registrarse" o "Crear cuenta", completa el formulario de registro con tu información personal y haz clic en "Crear cuenta" o "Registrarse". Verifica tu dirección de correo electrónico si es necesario y comienza a usar la plataforma.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Tengo algún problema?</button>
+                    <div class="faq-answer">
+                        <p>Si tienes un problema, contacta al soporte técnico a través del formulario de ayuda o envía un email a support@dentalchartpro.com. Proporciona detalles sobre el issue para una resolución rápida.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Cómo puedo restablecer mi contraseña?</button>
+                    <div class="faq-answer">
+                        <p>Haz clic en "Olvidé mi contraseña" en la página de inicio de sesión, ingresa tu email y sigue las instrucciones enviadas a tu correo para restablecerla.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Cuál es el proceso de pago?</button>
+                    <div class="faq-answer">
+                        <p>Los pagos se procesan de forma segura a través de tarjetas de crédito, transferencias o métodos integrados. Elige tu plan, ingresa los detalles y confirma. Para anual, aplica el 20% de descuento automáticamente.</p>
+                    </div>
+                </div>
+                <!-- Agrega más FAQs si es necesario -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="testimonials-container">
+            <div class="section-header">
+                <span class="section-label" style="background: rgba(255, 255, 255, 0.1); color: white;">TESTIMONIALS</span>
+                <h2 style="color: white;">Loved by Dental Professionals</h2>
+                <p style="color: rgba(255, 255, 255, 0.8);">Join thousands of satisfied practitioners worldwide.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"DentalChart Pro has completely transformed how we document patient care. The AI diagnosis feature is incredibly accurate and saves us so much time."</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DR</div>
+                        <div class="author-info">
+                            <h5>Dr. Robert Chen</h5>
+                            <p>Founder, Smile Dental Group</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"The best investment we've made for our practice. Our team adapted in days, and patients love the visual treatment presentations."</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h5>Dr. Sarah Martinez</h5>
+                            <p>Lead Dentist, City Dental Care</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"Finally, a dental software that's actually intuitive! The mobile app lets me review charts anywhere. Game changer for multi-location management."</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JK</div>
+                        <div class="author-info">
+                            <h5>Dr. James Kim</h5>
+                            <p>DSO Director, Pacific Dental Partners</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Transform Your Practice?</h2>
+        <p>Start your 30-day free trial today. No credit card required.</p>
+        <div class="cta-buttons">
+            <button class="btn-white">Start Free Trial</button>
+            <button class="btn-secondary" style="border-color: white; color: white;">Schedule a Demo</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>DentalChart Pro</h3>
+                <p>The most advanced cloud-based dental charting platform trusted by dental professionals worldwide.</p>
+                <div class="social-links">
+                    <div class="social-link">📘</div>
+                    <div class="social-link">🐦</div>
+                    <div class="social-link">💼</div>
+                    <div class="social-link">📷</div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#integrations">Integrations</a></li>
+                    <li><a href="#api">API</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Small Practices</a></li>
+                    <li><a href="#">Dental Clinics</a></li>
+                    <li><a href="#">Multi-Location</a></li>
+                    <li><a href="#">Specialists</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DentalChart Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Header Effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.hero::before');
+            parallaxElements.forEach(el => {
+                el.style.transform = `translateY(${scrolled * 0.5}px)`;
+            });
+        });
+
+        // Button Click Effects
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    </script>
+    <script>
+        // JavaScript for Pricing Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('billing-toggle');
+            const monthlyPrices = document.querySelectorAll('.price .monthly');
+            const annualPrices = document.querySelectorAll('.price .annual');
+            const toggleTexts = document.querySelectorAll('.pricing-toggle span');
+
+            toggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Mostrar precios anuales (con descuento)
+                    monthlyPrices.forEach(el => el.classList.add('hidden'));
+                    annualPrices.forEach(el => el.classList.remove('hidden'));
+                    // Invertir textos para coherencia visual
+                    toggleTexts[0].textContent = '20% Descuento Anual';
+                    toggleTexts[1].textContent = 'Pago Mensual';
+                } else {
+                    // Mostrar precios mensuales
+                    monthlyPrices.forEach(el => el.classList.remove('hidden'));
+                    annualPrices.forEach(el => el.classList.add('hidden'));
+                    toggleTexts[0].textContent = 'Pago Mensual';
+                    toggleTexts[1].textContent = '20% Descuento Anual';
+                }
+            });
+        });
+
+        // JavaScript for FAQ Accordion
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const item = this.parentNode;
+                    const answer = this.nextElementSibling;
+
+                    // Toggle active class
+                    item.classList.toggle('active');
+
+                    // Toggle max-height for smooth transition
+                    if (item.classList.contains('active')) {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    } else {
+                        answer.style.maxHeight = 0;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

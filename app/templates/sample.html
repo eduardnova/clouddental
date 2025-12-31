@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Chart Replica - Derec Style</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-bg: #007bff;
+            --main-bg: #1a222d;
+            --card-bg: #252e3b;
+            --text-main: #ffffff;
+            --text-muted: #a0acba;
+            --accent-blue: #4db8ff;
+            --accent-red: #ff4d4d;
+            --accent-purple: #a389f4;
+            --border-color: #343e4d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 70px;
+            background-color: var(--sidebar-bg);
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            color: rgba(255,255,255,0.7);
+            font-size: 20px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #fff;
+        }
+
+        /* Main Content Area */
+        .main-wrapper {
+            margin-left: 70px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Header / Tabs */
+        .header-tabs {
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            background-color: var(--main-bg);
+        }
+
+        .btn-group-toggle .btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 25px;
+            font-size: 14px;
+        }
+
+        .btn-group-toggle .btn.active {
+            background-color: var(--sidebar-bg);
+            color: white;
+            border-color: var(--sidebar-bg);
+        }
+
+        /* Dental Chart Layout */
+        .odontogram-container {
+            flex-grow: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .arch-row {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .tooth-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .tooth-unit:hover {
+            transform: scale(1.1);
+        }
+
+        .tooth-img {
+            width: 45px;
+            height: 80px;
+            background: #e0e0e0; /* Placeholder */
+            border-radius: 4px;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        /* Overlay colors based on status */
+        .tooth-img.pathology { background-color: var(--accent-red); opacity: 0.8; }
+        .tooth-img.restoration { background-color: var(--accent-purple); opacity: 0.8; }
+        .tooth-img.abrasion { background-color: var(--accent-blue); opacity: 0.8; }
+
+        .tooth-number {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Detail View Styles (Slide-in effect) */
+        .detail-view {
+            position: fixed;
+            right: -100%;
+            top: 0;
+            width: calc(100% - 70px);
+            height: 100%;
+            background: var(--main-bg);
+            z-index: 2000;
+            transition: 0.5s ease-in-out;
+            padding: 30px;
+        }
+
+        .detail-view.open {
+            right: 0;
+        }
+
+        .card-custom {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .endo-table th { color: var(--text-muted); font-weight: normal; font-size: 13px; }
+        .endo-table td { border-bottom: 1px solid var(--border-color); padding: 12px 0; }
+
+        .perio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .perio-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .perio-val { font-size: 24px; font-weight: bold; }
+        .perio-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in { animation: fadeIn 0.8s ease; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="nav-item"><i class="fas fa-arrow-left"></i></div>
+        <div class="nav-item active"><i class="fas fa-teeth"></i></div>
+        <div class="nav-item"><i class="fas fa-user"></i></div>
+        <div class="nav-item mt-auto mb-4"><i class="fas fa-question-circle"></i></div>
+    </div>
+
+    <div class="main-wrapper fade-in">
+        <div class="header-tabs">
+            <div class="btn-group btn-group-toggle">
+                <button class="btn active">Overview</button>
+                <button class="btn">Quickselect</button>
+                <button class="btn">Periodontal Probing</button>
+            </div>
+        </div>
+
+        <div class="odontogram-container">
+            <div class="arch-row" id="upper-arch">
+                </div>
+            <div class="arch-row" id="lower-arch">
+                </div>
+        </div>
+    </div>
+
+    <div id="toothDetail" class="detail-view">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 id="detailTitle">Tooth 16</h2>
+            <button class="btn btn-outline-light btn-sm" onclick="closeDetail()">✕ Close</button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <div class="card-custom h-100 d-flex flex-column align-items-center justify-content-center">
+                    <div style="width: 150px; height: 300px; background: #444; border-radius: 20px; border: 2px solid var(--accent-red);">
+                        <div class="mt-4" style="color: var(--accent-red)">DECAY (C3)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card-custom">
+                    <h5 class="mb-3 text-muted">Endodontic</h5>
+                    <table class="table table-dark table-borderless endo-table">
+                        <tr>
+                            <td><i class="fas fa-snowflake me-2"></i> Cold</td>
+                            <td class="text-end">Positive, Pain lingering <i class="fas fa-chevron-right ms-2"></i></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-hand-pointer me-2"></i> Percussion</td>
+                            <td class="text-end text-danger">Painful <i class="fas fa-chevron-right ms-2"></i></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card-custom">
+                    <h5 class="mb-3 text-muted">Periodontal</h5>
+                    <div class="perio-grid">
+                        <div class="perio-box"><div class="perio-val">2</div><div class="perio-label">Disto Palatal</div></div>
+                        <div class="perio-box"><div class="perio-val">1</div><div class="perio-label">Palatal</div></div>
+                        <div class="perio-box"><div class="perio-val">3</div><div class="perio-label">Mesio Palatal</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Data simulation for the chart
+        const upperTeeth = [18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28];
+        const lowerTeeth = [48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38];
+
+        function renderArch(containerId, teeth) {
+            const container = document.getElementById(containerId);
+            teeth.forEach(num => {
+                const div = document.createElement('div');
+                div.className = 'tooth-unit';
+                div.onclick = () => openDetail(num);
+                
+                // Add some random status for visual variety like the images
+                let statusClass = '';
+                if(num === 16) statusClass = 'pathology';
+                if(num === 26) statusClass = 'restoration';
+                if(num === 28) statusClass = 'abrasion';
+
+                div.innerHTML = `
+                    <div class="tooth-img ${statusClass}"></div>
+                    <div class="tooth-number">${num}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function openDetail(num) {
+            document.getElementById('detailTitle').innerText = `Tooth ${num}`;
+            document.getElementById('toothDetail').classList.add('open');
+        }
+
+        function closeDetail() {
+            document.getElementById('toothDetail').classList.remove('open');
+        }
+
+        // Initialize
+        renderArch('upper-arch', upperTeeth);
+        renderArch('lower-arch', lowerTeeth);
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental OS - Clinical Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Users/user/Documents/clouddental/app/static/css/style.css">
+    <link rel="stylesheet" href="/Users/user/Documents/clouddental/app/static/css/animation.css">
+</head>
+<body class="animate-fade-in">
+
+    <div class="app-wrapper">
+        <aside class="sidebar-nav">
+            <a href="#" class="nav-icon-link active" data-bs-toggle="tooltip" data-bs-placement="right" title="Chart">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2L4.5,20.29L5.21,21L12,18L18.79,21L19.5,20.29L12,2Z"/></svg>
+            </a>
+            <a href="#" class="nav-icon-link" data-bs-toggle="tooltip" data-bs-placement="right" title="Patients">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg>
+            </a>
+            <a href="#" class="nav-icon-link" data-bs-toggle="tooltip" data-bs-placement="right" title="History">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13,3A9,9 0 0,0 4,12H1L4.89,15.89L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3Z"/></svg>
+            </a>
+            <div class="mt-auto">
+                <a href="#" class="nav-icon-link" title="Settings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.97 19.05,5.05L16.56,6.05C16.04,5.65 15.48,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.52,5.32 7.96,5.65 7.44,6.05L4.95,5.05C4.73,4.97 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.52,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.48,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-container">
+            <header class="top-header">
+                <div class="d-flex align-items-center">
+                    <div class="me-4">
+                        <h1 class="h5 mb-0 fw-bold">Dr. Derec</h1>
+                        <span class="text-muted small">Male, 38y</span>
+                    </div>
+                    <button class="btn btn-ui-primary btn-sm px-3 shadow-sm">
+                        <svg width="16" height="16" fill="white" class="me-1"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        CHART
+                    </button>
+                </div>
+                <div class="d-none d-md-flex gap-4">
+                    <div style="width: 150px">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="small fw-bold text-uppercase" style="font-size: 9px">Plaque Index</span>
+                            <span class="small fw-bold">41%</span>
+                        </div>
+                        <div class="progress" style="height: 4px;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 41%"></div>
+                        </div>
+                    </div>
+                    <div style="width: 150px">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="small fw-bold text-uppercase" style="font-size: 9px">Bleeding Index</span>
+                            <span class="small fw-bold">33%</span>
+                        </div>
+                        <div class="progress" style="height: 4px;">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 33%"></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="container-fluid p-4">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="info-card mb-4 text-center">
+                            <div class="d-flex justify-content-center mb-3">
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-secondary active">Overview</button>
+                                    <button class="btn btn-outline-secondary">Quickselect</button>
+                                    <button class="btn btn-outline-secondary">Periodontal</button>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container py-4">
+                                <div class="tooth-grid">
+                                    <div class="tooth-item" data-tooth-id="16">
+                                        <div class="tooth-number">16</div>
+                                        <div class="tooth-status-indicator bg-danger" style="height: 3px; width: 100%; border-radius: 10px; margin-bottom: 5px;"></div>
+                                        <img src="https://placehold.co/40x80/e2e8f0/64748b?text=16" alt="Tooth" class="tooth-image">
+                                    </div>
+                                    </div>
+                                <div class="tooth-grid">
+                                    <div class="tooth-item" data-tooth-id="46">
+                                        <img src="https://placehold.co/40x80/e2e8f0/64748b?text=46" alt="Tooth" class="tooth-image">
+                                        <div class="tooth-number">46</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 animate-slide-left">
+                            <div class="col-md-6">
+                                <div class="info-card">
+                                    <h6 class="fw-bold mb-3 border-bottom pb-2">Endodontic</h6>
+                                    <ul class="list-unstyled small mb-0">
+                                        <li class="d-flex justify-content-between py-2 border-bottom">
+                                            <span><i class="me-2 text-primary opacity-50">❄️</i> Cold</span>
+                                            <span class="fw-medium text-danger">Positive, Pain lingering</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-2 border-bottom">
+                                            <span><i class="me-2 text-primary opacity-50">🔨</i> Percussion</span>
+                                            <span class="fw-medium text-danger">Painful</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between py-2">
+                                            <span><i class="me-2 text-primary opacity-50">⚡</i> Electricity</span>
+                                            <span class="text-muted">Not tested</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-card">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                                        <h6 class="fw-bold mb-0">Periodontal</h6>
+                                        <button class="btn btn-link btn-sm p-0 text-decoration-none">+ PROBING</button>
+                                    </div>
+                                    <div class="perio-grid">
+                                        <div class="perio-cell">
+                                            <div class="perio-value">2</div>
+                                            <div class="perio-label">Distal</div>
+                                        </div>
+                                        <div class="perio-cell">
+                                            <div class="perio-value text-danger">4</div>
+                                            <div class="perio-label">Palatal</div>
+                                        </div>
+                                        <div class="perio-cell">
+                                            <div class="perio-value">3</div>
+                                            <div class="perio-label">Mesial</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="info-card h-100">
+                            <ul class="nav nav-pills nav-fill mb-4 bg-light p-1 rounded-3">
+                                <li class="nav-item">
+                                    <button class="nav-link active btn-sm" data-bs-toggle="pill">TREATMENT PLAN</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link btn-sm" data-bs-toggle="pill">HISTORY</button>
+                                </li>
+                            </ul>
+
+                            <div class="treatment-list">
+                                <div class="d-flex align-items-start mb-3 p-2 border-start border-4 border-danger rounded-end bg-light animate-fade-in" style="--delay: 0.1s">
+                                    <div class="flex-grow-1 ms-2">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="badge bg-white text-dark border shadow-sm mb-1">Done</span>
+                                            <span class="small text-muted">16, Distal</span>
+                                        </div>
+                                        <p class="small mb-0 text-dark fw-medium">Decay, dentin, Cavitation, Pulp not involved, C3</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-start mb-3 p-2 border-start border-4 border-primary rounded-end bg-light animate-fade-in" style="--delay: 0.2s">
+                                    <div class="flex-grow-1 ms-2">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="badge bg-white text-dark border shadow-sm mb-1">Done</span>
+                                            <span class="small text-muted">15, Mesial</span>
+                                        </div>
+                                        <p class="small mb-0 text-dark fw-medium">Composite Restoration, Class II</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h6 class="fw-bold mb-3 d-flex justify-content-between">
+                                Medical issues
+                                <span class="text-primary small fw-normal cursor-pointer">Edit</span>
+                            </h6>
+                            <div class="medical-icons row g-3">
+                                <div class="col-6 d-flex align-items-center opacity-75">
+                                    <span class="me-2">❤️</span> <span class="small">Heart attack</span>
+                                </div>
+                                <div class="col-6 d-flex align-items-center opacity-75">
+                                    <span class="me-2">🫁</span> <span class="small">Diabetes</span>
+                                </div>
+                                <div class="col-6 d-flex align-items-center text-danger">
+                                    <span class="me-2">🩺</span> <span class="small">High BP</span>
+                                </div>
+                                <div class="col-6 d-flex align-items-center opacity-75">
+                                    <span class="me-2">🚬</span> <span class="small">Tobacco use</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Users/user/Documents/clouddental/app/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Core Framework
+Flask==3.0.0
+Flask-Login==0.6.3
+Flask-Mail==0.9.1
+Flask-WTF==1.2.1
+WTForms==3.1.1
+
+# Database
+Flask-SQLAlchemy==3.1.1
+PyMySQL==1.1.0
+SQLAlchemy==2.0.23
+
+# Redis (Optional)
+redis==5.0.1
+
+# Security
+Flask-Bcrypt==1.0.1
+PyJWT==2.8.0
+python-dotenv==1.0.0
+
+# Payment Processing
+stripe==7.8.0
+paypalrestsdk==1.13.1
+
+# HTTP Requests
+requests==2.31.0
+
+# Email
+email-validator==2.1.0
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Production Server
+gunicorn==21.2.0
+
+# Development
+Flask-Migrate==4.0.5

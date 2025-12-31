@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión - CloudDental{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-5">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-heart-pulse-fill text-primary" style="font-size: 3rem;"></i>
+                        <h2 class="mt-3 fw-bold">Iniciar sesión</h2>
+                        <p class="text-muted">Accede a tu cuenta de CloudDental</p>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('auth.login') }}">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">
+                                Recordarme
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+                            <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                        </button>
+
+                        <div class="text-center">
+                            <a href="{{ url_for('auth.forgot_password') }}" class="text-decoration-none">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-secondary" onclick="location.href='{{ url_for('auth.oauth_google') }}'">
+                            <i class="bi bi-google"></i> Continuar con Google
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="location.href='{{ url_for('auth.oauth_microsoft') }}'">
+                            <i class="bi bi-microsoft"></i> Continuar con Microsoft
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted">
+                            ¿No tienes cuenta? 
+                            <a href="{{ url_for('auth.register') }}" class="text-primary fw-bold text-decoration-none">
+                                Regístrate gratis
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
